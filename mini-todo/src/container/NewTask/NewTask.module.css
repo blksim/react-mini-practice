@@ -1,0 +1,40 @@
+.NewTask {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, 30%);
+  width: 50%;
+  height: 150px;
+  border: none;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.NewTask input {
+  width: 100%;
+  height: 70px;
+  border: 1px solid #c8c8c8;
+  border-radius: 7px;
+  text-align: center;
+  font-size: large;
+}
+
+.NewTask button {
+  width: 100%;
+  height: 50px;
+  margin: 10px 0;
+  background: #bd9ff3;
+  border: 1px solid #c8c8c8;
+  border-radius: 7px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.NewTask button:active,
+.NewTask button:hover {
+  background: #6e4ed8;
+  color: yellow;
+}
