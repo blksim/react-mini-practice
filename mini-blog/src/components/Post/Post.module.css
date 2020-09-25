@@ -2,7 +2,7 @@
   margin: 20px;
   padding: 10px;
   width: 60%;
-  height: 500px;
+  height: auto;
   border-radius: 9px;
   box-shadow: 4px 5px 3px #eee;
   background: #ffffff;
@@ -10,8 +10,8 @@
 }
 
 
-@media (min-width: 700px) {
+@media (max-width: 800px) {
   .Post {
-    height: 300px;
+    width: 100%;
   }
 }

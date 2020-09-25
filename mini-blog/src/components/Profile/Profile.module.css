@@ -9,3 +9,11 @@
   height: 250px;
   overflow: hidden;
 }
+
+@media (max-width: 800px) {
+  .Profile,
+  .Profile img {
+    width: 100px;
+    height: 100px;
+  } 
+}
