@@ -1,0 +1,22 @@
+input {
+  width: 250px;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 15px;
+}
+
+textarea {
+  width: 250px;
+  margin: 10px 0;
+  padding: 10px;
+  height: 100px;
+  font-size: 15px;
+  resize: none;
+}
+
+.Message {
+  margin: 0;
+  padding: 0;
+  color: blueviolet;
+  font-size: 12px;
+}
