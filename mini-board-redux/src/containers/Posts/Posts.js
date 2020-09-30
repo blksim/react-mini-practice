@@ -1,29 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import classes from './Posts.module.css';
 import Post from '../../components/Post/Post';
-import { connect } from 'react-redux';
+import Button from '../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';
 
 class Posts extends Component {
   state = {
-    posts: [
-      {
-        id: 1,
-        title: 'title',
-        body: 'content'
-      },
-      {
-        id: 2,
-        title: 'title',
-        body: 'content'
-      },
-      {
-        id: 3,
-        title: 'title',
-        body: 'content'
-  
-      }
-    ]
+    title: '',
+    body: '',
+    isValid: false
   };
 
   // componentDidMount() {
@@ -39,6 +26,25 @@ class Posts extends Component {
   //   })
   // };
 
+  titleChangeHandler = event => { 
+    this.setState({
+      ...this.state,
+      title: event.target.value,
+      isValid: this.validate(event.target.value)
+    });
+   }
+  
+  bodyChangeHandler = event => {
+    this.setState({
+      ...this.state,
+      body: event.target.value,
+      isValid: this.validate(event.target.value)
+    });
+  }
+
+  validate(value) {
+    return value ? true : false;
+  }
   render () {
     const posts = this.props.postList.map(post => {
       return <Post
@@ -47,7 +53,20 @@ class Posts extends Component {
         body={post.body}
         click={() => this.props.onDelete(post.id)}></Post>
     });
-    return <main className={classes.Posts}>{posts}</main>;
+
+    return (<main className={classes.Posts}>
+      <Input 
+        inputType="text" 
+        change={(event) => this.titleChangeHandler(event)} />
+      <Input 
+        inputType="textarea" 
+        change={(event) => this.bodyChangeHandler(event)} />
+      <Button 
+        value="Add a new post"
+        click={() => this.props.onAdd(this.state.title, this.state.body)} 
+        disabled={!this.state.isValid}/>
+      {posts}
+      </main>);
   }
 }
 
@@ -59,7 +78,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onDelete: (id) => dispatch({ type: 'DELETE', id: id })
+    onDelete: (id) => dispatch({ type: 'DELETE', id: id }),
+    onAdd: (title, body) => dispatch({ type: 'ADD', title: title, body: body }),
   }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);
