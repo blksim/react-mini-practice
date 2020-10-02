@@ -5,6 +5,7 @@ import classes from './Posts.module.css';
 import Post from '../../components/Post/Post';
 import Button from '../../components/UI/Button/Button';
 import Input from '../../components/UI/Input/Input';
+import * as postActions from '../../store/actions/index';
 
 class Posts extends Component {
   state = {
@@ -78,8 +79,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onDelete: (id) => dispatch({ type: 'DELETE', id: id }),
-    onAdd: (title, body) => dispatch({ type: 'ADD', title: title, body: body }),
+    onDelete: (id) => dispatch(postActions.deletePost(id)),
+    onAdd: (title, body) => dispatch(postActions.addPost(title, body)),
   }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

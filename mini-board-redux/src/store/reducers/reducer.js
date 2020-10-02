@@ -9,7 +9,7 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
-  if (action.type === 'DELETE') {
+  if (action.type === 'DELETE_POST') {
     const deletedArray = state.posts.filter((post, index) => post.id !== action.id)
     return {
       ...state,
@@ -17,7 +17,7 @@ const reducer = (state = initialState, action) => {
     }
   }
 
-  if (action.type === 'ADD') {
+  if (action.type === 'ADD_POST') {
     const arr = [...state.posts];
     arr.push({
       id: Math.floor(Math.random()*10000),

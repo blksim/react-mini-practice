@@ -5,9 +5,11 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux'; 
 import { Provider } from 'react-redux';
-import reducer from './store/reducer';
+import postReducer from './store/reducers/reducer';
 
-const store = createStore(reducer);
+const store = createStore(postReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 ReactDOM.render(
   <React.StrictMode>
