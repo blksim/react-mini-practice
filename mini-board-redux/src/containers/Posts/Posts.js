@@ -14,18 +14,9 @@ class Posts extends Component {
     isValid: false
   };
 
-  // componentDidMount() {
-  //   fetch('https://jsonplaceholder.typicode.com/posts')
-  //   .then(response => { 
-  //     return response.json()
-  //   })
-  //   .then(res => {
-  //     this.setState({ posts: res })
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   })
-  // };
+  componentDidMount() {
+    this.props.onLoad();
+  };
 
   titleChangeHandler = event => { 
     this.setState({
@@ -47,13 +38,18 @@ class Posts extends Component {
     return value ? true : false;
   }
   render () {
-    const posts = this.props.postList.map(post => {
-      return <Post
-        key={post.id}
-        title={post.title}
-        body={post.body}
-        click={() => this.props.onDelete(post.id)}></Post>
-    });
+    let posts = null;
+    if (!this.props.postList) {
+      posts = <p>No post in here!</p>
+    } else {
+      posts = this.props.postList.map(post => {
+        return <Post
+          key={post.id}
+          title={post.title}
+          body={post.body}
+          click={() => this.props.onDelete(post.id)}></Post>
+      });
+    }
 
     return (<main className={classes.Posts}>
       <Input 
@@ -81,6 +77,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onDelete: (id) => dispatch(postActions.deletePost(id)),
     onAdd: (title, body) => dispatch(postActions.addPost(title, body)),
+    onLoad: () => dispatch(postActions.fetchPosts())
   }
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Posts);

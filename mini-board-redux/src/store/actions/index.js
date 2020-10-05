@@ -1,5 +1,5 @@
 export {
   addPost,
-  deletePost
+  deletePost,
+  fetchPosts
 } from './posts';
-export {} from './posts';
