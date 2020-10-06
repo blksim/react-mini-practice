@@ -37,6 +37,7 @@ class Posts extends Component {
   validate(value) {
     return value ? true : false;
   }
+
   render () {
     let posts = null;
     if (!this.props.postList) {
