@@ -1,26 +1,27 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios-order';
 
-export const addPostStart = () => {
-  return {
-    type: actionTypes.ADD_POST_START
-  }
-};
-
-export const addPost = (title, body) => {
-  const post = JSON.stringify({
-    id: Math.floor(Math.random()*10000),
-    title: title,
-    body: body
-  })
+export const addPost = (data) => {
   return dispatch => {
-    axios.post('posts.json', post)
+    axios.post('posts.json', data)
+      .then((response) => {
+        dispatch(addPostSuccess(response.data.name, data));
+      })
+      .catch((error) => {
+        dispatch(addPostFail());
+      })
   }
 };
 
-export const addPostSuccess = () => {
+export const addPostSuccess = (key, data) => {
+  console.log(key, data);
   return {
-    type: actionTypes.ADD_POST_SUCCESS
+    type: actionTypes.ADD_POST_SUCCESS,
+    post: {
+      id: key,
+      title: data.title,
+      body: data.body
+    }
   }
 };
 
@@ -28,71 +29,50 @@ export const addPostFail = () => {
   return {
     type: actionTypes.ADD_POST_FAIL
   }
-};
-
-export const deletePostStart = () => {
-  return {
-    type: actionTypes.DELETE_POST_START
-  }
 }
 
 export const deletePost = (id) => {
   return dispatch => {
-    dispatch(deletePostStart());
-    axios.delete('posts.json', id)
+    axios.delete('posts/' + id, { mode: 'cors'})
       .then(res => {
-        dispatch(deletePostSuccess());
-      })
-      .catch(err => {
-        dispatch(deletePostFail());
-      })
-  }
-};
-
-export const deletePostSuccess = () => {
-  return {
-    type: actionTypes.DELETE_POST_SUCCESS
-  }
-}
-
-export const deletePostFail = () => {
-  return {
-    type: actionTypes.DELETE_POST_FAIL
-  }
-}
-
-export const fetchPostsStart = () => {
-  return {
-    type: actionTypes.FETCH_POSTS_START,
-  }
-}
-
-export const fetchPosts = () => {
-  return dispatch => {
-    dispatch(fetchPostsStart());
-    axios('posts.json')
-      .then(res => {
-        console.log(res);
-        dispatch(fetchPostsSuccess(res.data))
       })
       .catch(err => {
         console.log(err);
       })
   }
+};
+
+export const fetchPosts = () => {
+  return dispatch => {
+    axios('posts.json')
+    .then(res => {
+      dispatch(fetchPostsSuccess(res.data));
+      })
+    .catch(err => {
+      dispatch(fetchPostsFail());
+    })
+  }
 }
 
 export const fetchPostsSuccess = (posts) => {
   const arr = [];
+  const keys = Object.keys(posts);
+  console.log(keys);
   for (const key in posts) {
-    arr.push(posts[key]);    
+    for (let i = 0; i < keys.length; i++) {
+      if (keys[i] === key) {
+        arr.push({ ...posts[key], id: keys[i] })
+      } 
+    }
   }
+  console.log(arr);
   return {
     type: actionTypes.FETCH_POSTS_SUCCESS,
     posts: arr
   }
-}
+};
 
-export const fetchPostsFail = (err) => {
+export const fetchPostsFail = (posts) => {
   return {
     type: actionTypes.FETCH_POSTS_FAIL
   }

@@ -9,8 +9,6 @@ import * as postActions from '../../store/actions/index';
 
 class Posts extends Component {
   state = {
-    title: '',
-    body: '',
     isValid: false
   };
 
@@ -77,7 +75,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onDelete: (id) => dispatch(postActions.deletePost(id)),
-    onAdd: (title, body) => dispatch(postActions.addPost(title, body)),
+    onAdd: (title, body) => dispatch(postActions.addPost({title: title, body: body})),
     onLoad: () => dispatch(postActions.fetchPosts())
   }
 };
