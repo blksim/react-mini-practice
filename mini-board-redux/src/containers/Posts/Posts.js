@@ -14,6 +14,7 @@ class Posts extends Component {
 
   componentDidMount() {
     this.props.onLoad();
+    this.setState({ loading: true });
   };
 
   titleChangeHandler = event => { 
@@ -38,8 +39,9 @@ class Posts extends Component {
 
   render () {
     let posts = null;
+    
     if (!this.props.postList) {
-      posts = <p>No post in here!</p>
+      posts = <div>No post in here!</div>;
     } else {
       posts = this.props.postList.map(post => {
         return <Post
@@ -49,8 +51,9 @@ class Posts extends Component {
           click={() => this.props.onDelete(post.id)}></Post>
       });
     }
-
-    return (<main className={classes.Posts}>
+   
+    return (
+    <main className={classes.Posts}>
       <Input 
         inputType="text" 
         change={(event) => this.titleChangeHandler(event)} />

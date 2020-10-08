@@ -4,37 +4,20 @@ import axios from '../../axios-order';
 export const addPost = (data) => {
   return dispatch => {
     axios.post('posts.json', data)
-      .then((response) => {
-        dispatch(addPostSuccess(response.data.name, data));
+      .then((res) => {
+        dispatch(fetchPosts());
       })
-      .catch((error) => {
-        dispatch(addPostFail());
+      .catch((err) => {
+        console.log(err);
       })
   }
 };
-
-export const addPostSuccess = (key, data) => {
-  console.log(key, data);
-  return {
-    type: actionTypes.ADD_POST_SUCCESS,
-    post: {
-      id: key,
-      title: data.title,
-      body: data.body
-    }
-  }
-};
-
-export const addPostFail = () => {
-  return {
-    type: actionTypes.ADD_POST_FAIL
-  }
-}
 
 export const deletePost = (id) => {
   return dispatch => {
-    axios.delete('posts/' + id, { mode: 'cors'})
+    axios.delete('posts/' + id + '.json')
       .then(res => {
+        dispatch(deletePostSuccess(id));
       })
       .catch(err => {
         console.log(err);
@@ -42,38 +25,40 @@ export const deletePost = (id) => {
   }
 };
 
+export const deletePostSuccess = (id) => {
+  return {
+    type: actionTypes.DELETE_POST_SUCCESS,
+    id: id
+  }
+};
+
 export const fetchPosts = () => {
   return dispatch => {
     axios('posts.json')
-    .then(res => {
-      dispatch(fetchPostsSuccess(res.data));
+      .then(res => {
+        dispatch(fetchPostsSuccess(res.data));
       })
-    .catch(err => {
-      dispatch(fetchPostsFail());
-    })
+      .catch(err => {
+        console.log(err);
+      })
   }
 }
 
 export const fetchPostsSuccess = (posts) => {
   const arr = [];
   const keys = Object.keys(posts);
-  console.log(keys);
   for (const key in posts) {
     for (let i = 0; i < keys.length; i++) {
       if (keys[i] === key) {
-        arr.push({ ...posts[key], id: keys[i] })
-      } 
+        arr.push({
+          ...posts[key],
+          id: keys[i]
+        })
+      }
     }
   }
-  console.log(arr);
   return {
     type: actionTypes.FETCH_POSTS_SUCCESS,
     posts: arr
   }
 };
-
-export const fetchPostsFail = (posts) => {
-  return {
-    type: actionTypes.FETCH_POSTS_FAIL
-  }
-}
