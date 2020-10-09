@@ -1,0 +1,13 @@
+.Navigation {
+  margin: 10px;
+}
+
+.NavItem {
+  margin: 5px;
+  text-decoration: none;
+}
+
+.NavItem:hover {
+  text-decoration: underline;
+  color: salmon;
+}

@@ -1,0 +1,19 @@
+.Form {
+  position: absolute;
+  width: 500px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #eeeeee;
+  border-radius: 7px;
+  z-index: -2;
+}
+
+.Active {
+  z-index: 3;
+}

@@ -4,19 +4,19 @@ import classes from './Input.module.css';
 
 const input = (props) => {
   let input = null;
+  const inputType = props.inputType;
 
-  if (props.inputType === 'text') {
-    input = (<input 
-    className={classes.Input}
-    onChange={props.change} />);
-  };
-
-  if (props.inputType === 'textarea') {
+  if (inputType === 'textarea') {
     input = (<textarea 
       className={classes.Textarea}
       onChange={props.change} />);
+  } else {
+    input = (<input 
+      type={inputType}
+      className={classes.Input}
+      onChange={props.change} />);
   }
-  
+
   return input;
 };
 
